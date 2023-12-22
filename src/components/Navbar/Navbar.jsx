@@ -1,10 +1,17 @@
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 import { CiMenuBurger } from "react-icons/ci";
 import { IoMdClose } from "react-icons/io";
+import { AuthContext } from "../../provider/AuthProvider";
 
 const Navbar = () => {
     const [open, setOpen] = useState(false)
+
+    const { user,logOut } = useContext(AuthContext)
+
+    const handleLogout = () => {
+        logOut()
+    }
 
     const navLinks = <>
         <li className="">
@@ -40,10 +47,10 @@ const Navbar = () => {
     </>
     return (
         <div>
-            <nav className="flex justify-between items-center relative shadow-lg">
+            <nav className="flex justify-between items-center relative shadow-lg px-5 py-5">
                 <div className="flex items-center gap-5">
                     <div className="lg:hidden" onClick={() => setOpen(!open)}>
-                        { open ? <IoMdClose /> : <CiMenuBurger/>}
+                        {open ? <IoMdClose /> : <CiMenuBurger />}
                     </div>
                     <h1>Phone</h1>
                 </div>
@@ -55,11 +62,12 @@ const Navbar = () => {
 
                 {/*  */}
 
-                <div className="dropdown dropdown-end">
+                <div className="dropdown dropdown-end flex items-center">
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                         <div className="w-10 rounded-full">
                             <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
                         </div>
+
                     </div>
                     <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
                         <li>
@@ -71,6 +79,14 @@ const Navbar = () => {
                         <li><a>Settings</a></li>
                         <li><a>Logout</a></li>
                     </ul>
+                    {
+                        user ? <>
+                            <span>{user.email}</span>
+                            <button className="btn btn-ghost" onClick={handleLogout}>Logout</button>
+                        </> :
+                            <button className="btn btn-ghost"><Link to={'/login'}>Login</Link></button>
+                    }
+
                 </div>
             </nav >
             <ul className={`lg:hidden space-y-3 bg-red-200 absolute z-10 px-4 py-2 top-14 left-0 ${open ? "" : "hidden"}`}>
