@@ -3,6 +3,10 @@ import MainLayout from "../layout/MainLayout";
 import Home from "../pages/Home/Home";
 import Phones from "../pages/Phone/Phones";
 import About from "../pages/About/About";
+import Login from "../pages/Login/Login";
+import Register from "../pages/Register/Register";
+import PhoneDetails from "../components/Shared/PhoneDetails/PhoneDetails";
+
 
 const myCreateRouter = createBrowserRouter([
     {
@@ -15,7 +19,8 @@ const myCreateRouter = createBrowserRouter([
             },
             {
                 path:'/phones',
-                element:<Phones/>
+                element:<Phones/>,
+                loader: () => fetch('http://localhost:5000/phones')
             },
             {
                 path:'/about',
@@ -23,11 +28,17 @@ const myCreateRouter = createBrowserRouter([
             },
             {
                 path:'/login',
-                element:<Phones/>
+                element:<Login/>
             },
             {
                 path:'/register',
-                element:<Phones/>
+                element:<Register/>
+            },
+            {
+                path:'/phone/:id',
+                element:<PhoneDetails/>,
+                loader:({params}) => fetch(`http://localhost:5000/phones/${params.id}`)
+                 
             }
         ]
     }

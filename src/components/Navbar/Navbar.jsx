@@ -73,7 +73,7 @@ const Navbar = () => {
                     </ul>
                 </div>
             </nav >
-            <ul className={`lg:hidden space-y-3 bg-red-200 absolute z-10 px-4 py-2 top-14 left-0 ${open ? "" : "-top-60"}`}>
+            <ul className={`lg:hidden space-y-3 bg-red-200 absolute z-10 px-4 py-2 top-14 left-0 ${open ? "" : "hidden"}`}>
                 {navLinks}
             </ul>
         </div >
